@@ -12,7 +12,7 @@ An end-to-end research system for 9 Chinese commodity futures (SHFE copper, alum
 | **Charts and factor contributions** | **Backtest and forward test** |
 | ![Price and open interest chart, factor contribution table](docs/screenshots/charts.jpg) | ![Pre-registered forward test and cost-adjusted backtest vs baselines](docs/screenshots/backtest.jpg) |
 
-*Screenshots are from 2026-10-27 data. The UI is in Chinese. Signals shown are research output, not investment advice.*
+*Screenshots: signal-day data from the 2026-10-27 close, plus live quotes from the 2026-10-28 day session. The UI is in Chinese. Signals shown are research output, not investment advice.*
 
 ## What it does
 

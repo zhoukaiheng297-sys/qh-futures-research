@@ -149,15 +149,16 @@ async function renderOverview() {
         el("td", { class: "num opt " + chgClass(p.change_5d) }, signed(p.change_5d)),
         el("td", { class: "num rt", id: `rt-${p.product}` }, el("span", { class: "muted small" }, "加载中…")),
         ...hs.map((h) => el("td", {}, signalBadge(p.horizons[h]))),
-        el("td", { class: "opt small muted" }, p.quadrant),
-        el("td", { class: "opt small muted" }, p.downgrades.length ? `${p.downgrades.length} 项提示` : "")));
+        // 括号里的解释放到悬停提示；屏幕较窄时这两列隐藏（品种页上都有），表格不出横向滚动条
+        el("td", { class: "opt wide small muted", title: p.quadrant }, p.quadrant.split("（")[0]),
+        el("td", { class: "opt wide small muted" }, p.downgrades.length ? `${p.downgrades.length} 项提示` : "")));
     return el("section", { class: "card" },
       el("div", { class: "card-head" }, el("h3", {}, sector)),
       el("div", { class: "table-scroll" }, el("table", {},
         el("thead", {}, el("tr", {}, el("th", {}, "品种"), el("th", { class: "num" }, `${data.meta.data_last_date.slice(5)} 收盘`), el("th", { class: "num opt" }, "结算"),
           el("th", { class: "num", title: "比昨结算" }, "涨跌"),
-          el("th", { class: "num opt" }, "5 日"), el("th", { class: "num rt" }, "实时最新"), ...hs.map((h) => el("th", {}, `${h} 日信号`)), el("th", { class: "opt" }, "量价仓"),
-          el("th", { class: "opt" }, ""))),
+          el("th", { class: "num opt" }, "5 日"), el("th", { class: "num rt" }, "实时最新"), ...hs.map((h) => el("th", {}, `${h} 日信号`)), el("th", { class: "opt wide" }, "量价仓"),
+          el("th", { class: "opt wide" }, ""))),
         el("tbody", {}, ...rows))));
   });
   $("view").replaceChildren(intro, ...cards);
