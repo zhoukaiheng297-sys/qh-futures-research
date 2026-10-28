@@ -1,0 +1,15 @@
+# 手工维护的重大事件（日期按北京时间）。products 不写表示影响全部品种。
+# 美联储议息结果在美东时间下午 2 点公布，即北京时间第二天凌晨，这里写北京时间日期。
+# 来源：federalreserve.gov 议息日历（2027 年日期为暂定，每年年底核对一次）。
+- {date: 2026-10-29, name: 美联储议息结果公布, importance: high}
+- {date: 2026-12-10, name: 美联储议息结果公布, importance: high}
+- {date: 2027-01-28, name: 美联储议息结果公布, importance: high}
+- {date: 2027-03-18, name: 美联储议息结果公布, importance: high}
+- {date: 2027-04-29, name: 美联储议息结果公布, importance: high}
+- {date: 2027-06-10, name: 美联储议息结果公布, importance: high}
+- {date: 2027-07-29, name: 美联储议息结果公布, importance: high}
+- {date: 2027-09-16, name: 美联储议息结果公布, importance: high}
+- {date: 2027-10-28, name: 美联储议息结果公布, importance: high}
+- {date: 2027-12-09, name: 美联储议息结果公布, importance: high}
+# 例：交易所调整保证金、行业会议、产业政策等，按需添加
+# - {date: 2026-11-15, name: 某某政策落地, importance: medium, products: [RB, HC]}

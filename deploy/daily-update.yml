@@ -1,0 +1,49 @@
+# 示例：每日自动更新。展示仓库里不启用（没有配置 Secrets 会每天失败）。
+# 要启用：复制到 .github/workflows/，并在仓库 Settings → Secrets and variables → Actions 里添加下面列出的 Secrets 和变量。
+#
+# 每个交易日北京时间 16:45 跑一次日更（交易所排名、仓单 16:30 前后公布），结果上传到 Hugging Face 私有数据集。
+# 信号对应"当晚 21:00 夜盘开盘进场"，所以必须在夜盘前算完；伦敦当天的收盘要到北京时间次日凌晨才有，
+# 算信号时只用前一个交易日的外盘，夜里再跑一次也不会改变信号，就不安排了。
+# 最后一步检查数据是否过期：放在上传之后，部分数据过期时其余结果照常上线，任务失败触发邮件提醒。
+# 需要在 GitHub 仓库 Settings → Secrets and variables → Actions 里添加：
+#   Secrets：HF_TOKEN（Write 权限）、ANTHROPIC_API_KEY（可选，消息汇总和解读用）
+#   Variables：HF_DATASET_REPO（如 用户名/futures-site-data）
+name: daily-update
+
+on:
+  schedule:
+    - cron: "45 8 * * 1-5"    # UTC 08:45 = 北京 16:45
+  workflow_dispatch: {}
+
+concurrency:
+  group: daily-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      HF_DATASET_REPO: ${{ vars.HF_DATASET_REPO }}
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: 探测数据源（海外机房能否访问，结果看日志）
+        run: python main.py probe
+      - name: 拉回原始库
+        run: python main.py pull-raw
+      - name: 回补缺失的历史（首次较慢，之后只补最近几天）
+        run: python main.py init
+      - name: 日更（因子、模型、可靠性、消息、解读）
+        run: python main.py update --skip-collect
+      - name: 上传结果
+        run: python main.py publish --raw
+      - name: 检查数据是否过期（任何一项落后 3 个交易日及以上就让任务失败，GitHub 会发邮件）
+        run: python main.py check

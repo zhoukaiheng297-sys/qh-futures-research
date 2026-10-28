@@ -1,0 +1,10 @@
+.venv
+.env
+data
+.git
+.github
+.claude
+tests
+**/__pycache__
+.Rhistory
+.RData

@@ -1,0 +1,8 @@
+# 网页只读 site.db，依赖很少（版本上限同 requirements.txt 的说明）
+fastapi>=0.160,<1
+uvicorn>=0.50,<1
+pydantic>=2.12,<3
+python-dotenv>=1.1,<2
+huggingface_hub>=0.30,<3
+httpx>=0.28,<1
+tzdata

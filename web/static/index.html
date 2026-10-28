@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QH期货</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="wrap top">
+    <div class="brand">
+      <h1><a href="#/" class="home-link">QH期货</a></h1>
+      <span class="badge" id="badge">有色 · 黑色</span>
+      <nav class="nav" id="nav" hidden>
+        <a href="#/">总览</a>
+        <a href="#/backtest">回测与可靠性</a>
+        <a href="#/health">数据状态</a>
+        <button class="ghost small" id="logout">退出</button>
+      </nav>
+    </div>
+    <p class="tagline" id="tagline">真实行情 · 多因子与行为金融信号 · 每条结论都附历史胜率和可信度</p>
+  </header>
+
+  <main class="wrap" id="app">
+    <section class="card login" id="login" hidden>
+      <h3>输入访问口令</h3>
+      <p class="muted small">这个网站只开放给少数人，口令请向站长索取。</p>
+      <form id="login-form" class="login-form">
+        <input type="password" id="passcode" autocomplete="current-password" aria-label="访问口令" placeholder="访问口令" required>
+        <button class="primary" type="submit">进入</button>
+      </form>
+      <p class="error small" id="login-error" hidden></p>
+    </section>
+    <div id="view"></div>
+    <p class="error" id="error" hidden></p>
+  </main>
+
+  <footer class="wrap foot" id="foot">
+    <p id="disclaimer">信号由统计模型生成，仅供研究交流，不构成投资建议。期货交易有杠杆，风险很大。</p>
+    <p id="stamp"></p>
+  </footer>
+  <div class="tooltip" id="tooltip" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
